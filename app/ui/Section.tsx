@@ -26,7 +26,7 @@ const Section = ({
 
   return (
     <section
-      className={`${directionClasses[direction]} ${alignmentClasses[alignContents]} ${className}`}
+      className={`${directionClasses[direction]} ${alignmentClasses[alignContents]} mb-6 ${className}`}
     >
       {children}
     </section>

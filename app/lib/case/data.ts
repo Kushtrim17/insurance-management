@@ -9,7 +9,7 @@ export async function fetchCaseByGuid(
 ): Promise<CaseResponse> {
   const url = `${API_BASE_URL}/case?accessToken=${accessToken}&guid=${guid}`;
 
-  const response = await fetch(url, { cache: "no-store" });
+  const response = await fetch(url);
 
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
