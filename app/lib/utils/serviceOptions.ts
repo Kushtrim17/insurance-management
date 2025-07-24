@@ -25,7 +25,7 @@ const SERVICE_OPTIONS = [
   },
 ];
 
-export const getServiceOptions = (disabledOptions: number[]) => {
+export const getSelectableServiceOptions = (disabledOptions: number[]) => {
   return SERVICE_OPTIONS.map((option) => ({
     ...option,
     isDisabled: disabledOptions.includes(option.value),

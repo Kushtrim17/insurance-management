@@ -1,15 +1,11 @@
-import { Caption, Container, Title, Section, Button } from "@/app/ui";
+import { Caption, Container, Title, Section } from "@/app/ui";
 import { swapStockLookup } from "@/app/lib/stock/stockLookup";
 import { notFound } from "next/navigation";
-import {
-  getServiceOptions,
-  SERVICE_TYPES,
-} from "@/app/lib/utils/serviceOptions";
 import DeviceInformation from "@/app/[guid]/components/DeviceInformation";
 import CustomerInformation from "@/app/[guid]/components/CustomerInformation";
 import ProblemDescription from "@/app/[guid]/components/ProblemDescription";
-import ServiceAndColorPicker from "@/app/[guid]/components/ServicePicker";
 import { Case } from "@/app/lib/case/types";
+import ServiceOptionsClient from "../components/ServiceOptionsClient";
 
 type PageProps = {
   caseData: Case;
@@ -21,8 +17,6 @@ export default async function ServiceOptions({ caseData }: PageProps) {
       brand: caseData.manufacturer.name,
       model: caseData.productData.model,
     });
-
-    const hasColorOptions = stockLookup.colors.length > 0;
 
     return (
       <Container>
@@ -42,19 +36,7 @@ export default async function ServiceOptions({ caseData }: PageProps) {
           <ProblemDescription problemText={caseData.productData.problemText} />
         </Section>
 
-        <Section direction="row">
-          <ServiceAndColorPicker
-            options={getServiceOptions(
-              hasColorOptions ? [] : [SERVICE_TYPES.SWAP]
-            )}
-            initialSelectedService={caseData.serviceTypeId}
-            availableColors={stockLookup.colors}
-          />
-        </Section>
-
-        <Section direction="row" alignContents="center">
-          <Button>Proceed to payment</Button>
-        </Section>
+        <ServiceOptionsClient stockLookup={stockLookup} caseData={caseData} />
       </Container>
     );
   } catch (error) {
