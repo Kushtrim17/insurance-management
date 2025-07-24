@@ -4,14 +4,15 @@ import { notFound } from "next/navigation";
 import DeviceInformation from "@/app/[guid]/components/DeviceInformation";
 import CustomerInformation from "@/app/[guid]/components/CustomerInformation";
 import ProblemDescription from "@/app/[guid]/components/ProblemDescription";
+import ServiceOptionsClient from "@/app/[guid]/components/ServiceOptionsClient";
 import { Case } from "@/app/lib/case/types";
-import ServiceOptionsClient from "../components/ServiceOptionsClient";
 
 type PageProps = {
   caseData: Case;
+  guid: string;
 };
 
-export default async function ServiceOptions({ caseData }: PageProps) {
+export default async function ServiceOptions({ caseData, guid }: PageProps) {
   try {
     const stockLookup = await swapStockLookup({
       brand: caseData.manufacturer.name,
@@ -36,7 +37,11 @@ export default async function ServiceOptions({ caseData }: PageProps) {
           <ProblemDescription problemText={caseData.productData.problemText} />
         </Section>
 
-        <ServiceOptionsClient stockLookup={stockLookup} caseData={caseData} />
+        <ServiceOptionsClient
+          stockLookup={stockLookup}
+          caseData={caseData}
+          guid={guid}
+        />
       </Container>
     );
   } catch (error) {

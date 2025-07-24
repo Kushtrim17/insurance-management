@@ -14,7 +14,8 @@ import {
   SERVICE_TYPES,
 } from "@/app/lib/utils/serviceOptions";
 import { Case } from "@/app/lib/case/types";
-import { useEffect, useState } from "react";
+import { useCanProceedToPayment } from "@/app/hooks/useCanProceedToPayment";
+import { useCaseState } from "@/app/hooks/useCaseState";
 
 type ServiceOptionsClientProps = {
   stockLookup: {
@@ -22,34 +23,22 @@ type ServiceOptionsClientProps = {
     colors: string[];
   };
   caseData: Case;
+  guid: string;
 };
 
 export default function ServiceOptionsClient({
   stockLookup,
   caseData,
+  guid,
 }: ServiceOptionsClientProps) {
-  const [serviceTypeId, setServiceTypeId] = useState<number>(
-    caseData.serviceTypeId
-  );
-  const [selectedColor, setSelectedColor] = useState<string | null>(null);
-  const [canProceedToPayment, setCanProceedToPayment] =
-    useState<boolean>(false);
-  const hasColorOptionsAvailable = stockLookup.colors.length > 0;
+  const { serviceTypeId, setServiceTypeId, selectedColor, setSelectedColor } =
+    useCaseState(guid, caseData);
 
-  useEffect(() => {
-    switch (serviceTypeId) {
-      case SERVICE_TYPES.THEFT_LOST:
-      case SERVICE_TYPES.DROP_OFF:
-        setCanProceedToPayment(true);
-        break;
-      case SERVICE_TYPES.SWAP:
-        setCanProceedToPayment(selectedColor !== null);
-        break;
-      default:
-        setCanProceedToPayment(false);
-        break;
-    }
-  }, [serviceTypeId, selectedColor]);
+  const canProceedToPayment = useCanProceedToPayment(
+    serviceTypeId,
+    selectedColor
+  );
+  const hasColorOptionsAvailable = stockLookup.colors.length > 0;
 
   return (
     <>
