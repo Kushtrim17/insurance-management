@@ -1,12 +1,19 @@
 import { XMLParser } from "fast-xml-parser";
 
+export type SwapStockLookup = {
+  status: boolean;
+  colors: string[];
+};
+
+type SwapStockLookupProps = {
+  brand: string;
+  model: string;
+};
+
 export async function swapStockLookup({
   brand,
   model,
-}: {
-  brand: string;
-  model: string;
-}) {
+}: SwapStockLookupProps): Promise<SwapStockLookup> {
   const soapBody = `
     <x:Envelope xmlns:x="http://schemas.xmlsoap.org/soap/envelope/"
                 xmlns:tem="http://tempuri.org/"

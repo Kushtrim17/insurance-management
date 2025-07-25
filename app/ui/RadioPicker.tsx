@@ -13,11 +13,18 @@ type RadioPickerProps = {
   value: string | number;
   onChange: (value: string | number) => void;
   name: string;
+  inline?: boolean;
 };
 
-const RadioPicker = ({ options, value, onChange, name }: RadioPickerProps) => {
+const RadioPicker = ({
+  options,
+  value,
+  onChange,
+  name,
+  inline = false,
+}: RadioPickerProps) => {
   return (
-    <div className="space-y-3">
+    <div className={inline ? "flex gap-3" : "space-y-3"}>
       {options.map((option: RadioOption) => (
         <RadioButtonOption
           key={option.value}

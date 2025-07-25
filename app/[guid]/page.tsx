@@ -1,8 +1,7 @@
 import { fetchCaseByGuid } from "@/app/lib/case/data";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { SERVICE_TYPES } from "@/app/lib/utils/serviceOptions";
 import ServiceOptions from "@/app/[guid]/service-options/page";
-import Payment from "@/app/[guid]/payment/page";
 
 type PageProps = {
   params: {
@@ -17,7 +16,8 @@ export default async function Page({ params }: PageProps) {
     const caseData = await fetchCaseByGuid(guid);
 
     if (caseData.data.serviceTypeId === SERVICE_TYPES.THEFT_LOST) {
-      return <Payment caseData={caseData.data} />;
+      // redirect(`/${guid}/payment`);
+      // TODO: fix this
     }
 
     return <ServiceOptions caseData={caseData.data} guid={guid} />;

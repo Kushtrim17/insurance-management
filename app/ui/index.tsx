@@ -12,6 +12,7 @@ import {
 } from "./Card";
 import RadioPicker from "./RadioPicker";
 import Button from "./Button";
+import Input from "./Input";
 
 export {
   Caption,
@@ -26,4 +27,5 @@ export {
   CardTitle,
   RadioPicker,
   Button,
+  Input,
 };

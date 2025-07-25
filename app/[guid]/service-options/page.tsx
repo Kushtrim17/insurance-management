@@ -1,10 +1,10 @@
 import { Caption, Container, Title, Section } from "@/app/ui";
 import { swapStockLookup } from "@/app/lib/stock/stockLookup";
 import { notFound } from "next/navigation";
-import DeviceInformation from "@/app/[guid]/components/DeviceInformation";
-import CustomerInformation from "@/app/[guid]/components/CustomerInformation";
-import ProblemDescription from "@/app/[guid]/components/ProblemDescription";
-import ServiceOptionsClient from "@/app/[guid]/components/ServiceOptionsClient";
+import DeviceInformation from "@/app/[guid]/service-options/components/DeviceInformation";
+import CustomerInformation from "@/app/[guid]/service-options/components/CustomerInformation";
+import ProblemDescription from "@/app/[guid]/service-options/components/ProblemDescription";
+import ServiceOptionsClient from "@/app/[guid]/service-options/components/ServiceOptionsClient";
 import { Case } from "@/app/lib/case/types";
 
 type PageProps = {

@@ -25,6 +25,18 @@ const SERVICE_OPTIONS = [
   },
 ];
 
+export const getServiceOptionLabel = (serviceTypeId: number) => {
+  const serviceOption = SERVICE_OPTIONS.find(
+    (option) => option.value === serviceTypeId
+  );
+
+  if (!serviceOption) {
+    return "Unknown";
+  }
+
+  return serviceOption.label;
+};
+
 export const getSelectableServiceOptions = (disabledOptions: number[]) => {
   return SERVICE_OPTIONS.map((option) => ({
     ...option,

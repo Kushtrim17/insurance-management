@@ -16,12 +16,11 @@ import {
 import { Case } from "@/app/lib/case/types";
 import { useCanProceedToPayment } from "@/app/hooks/useCanProceedToPayment";
 import { useCaseState } from "@/app/hooks/useCaseState";
+import { SwapStockLookup } from "@/app/lib/stock/stockLookup";
+import { useRouter } from "next/navigation";
 
 type ServiceOptionsClientProps = {
-  stockLookup: {
-    status: boolean;
-    colors: string[];
-  };
+  stockLookup: SwapStockLookup;
   caseData: Case;
   guid: string;
 };
@@ -31,6 +30,7 @@ export default function ServiceOptionsClient({
   caseData,
   guid,
 }: ServiceOptionsClientProps) {
+  const router = useRouter();
   const { serviceTypeId, setServiceTypeId, selectedColor, setSelectedColor } =
     useCaseState(guid, caseData);
 
@@ -39,6 +39,10 @@ export default function ServiceOptionsClient({
     selectedColor
   );
   const hasColorOptionsAvailable = stockLookup.colors.length > 0;
+
+  const handleProceedToPayment = () => {
+    router.push(`/${guid}/payment`);
+  };
 
   return (
     <>
@@ -83,7 +87,12 @@ export default function ServiceOptionsClient({
       </Section>
 
       <Section direction="row" alignContents="center">
-        <Button disabled={!canProceedToPayment}>Proceed to payment</Button>
+        <Button
+          disabled={!canProceedToPayment}
+          onClick={handleProceedToPayment}
+        >
+          Proceed to payment
+        </Button>
       </Section>
     </>
   );
