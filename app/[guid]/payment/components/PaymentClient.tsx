@@ -75,7 +75,11 @@ export default function PaymentClient({
               }}
             />
           ) : (
-            <SwishPayment />
+            <SwishPayment
+              onPay={() => {
+                console.log("Paying with swish");
+              }}
+            />
           )}
         </CardContent>
       </Card>

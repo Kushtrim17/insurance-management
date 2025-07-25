@@ -24,3 +24,11 @@ export type BankErrors = {
   expiryDate: string;
   cvv: string;
 };
+
+export type SwishValues = {
+  phoneNumber: string;
+};
+
+export type SwishErrors = {
+  phoneNumber: string;
+};
