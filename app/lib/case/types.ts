@@ -35,6 +35,7 @@ export interface ProductData {
 export interface PartnerSpecific {
   insuranceLtd: {
     deductible: number;
+    deposit?: number;
     redirectUrl: string;
     serviceOption: string;
   };
