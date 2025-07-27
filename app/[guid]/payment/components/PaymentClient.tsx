@@ -31,7 +31,7 @@ export default function PaymentClient({
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethodKey>(
     PaymentMethodKey.BANK_CARD
   );
-  const { serviceTypeId } = useCaseState(guid, serviceCase);
+  const { serviceTypeId, selectedColor } = useCaseState(guid, serviceCase);
   const { manufacturer, productData, orderData } = serviceCase;
   const { deductible, deposit, redirectUrl } =
     orderData.partnerSpecific.insuranceLtd;
@@ -110,6 +110,7 @@ export default function PaymentClient({
             </p>
             <p>IMEI: {serviceCase.productData.imei}</p>
             <p>Service: {serviceOptionLabel}</p>
+            {selectedColor && <p>Color: {selectedColor}</p>}
           </CardContent>
         </Card>
       </Section>

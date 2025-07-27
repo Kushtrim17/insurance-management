@@ -17,7 +17,7 @@ import { Case } from "@/app/lib/case/types";
 import { useCanProceedToPayment } from "@/app/hooks/useCanProceedToPayment";
 import { useCaseState } from "@/app/hooks/useCaseState";
 import { SwapStockLookup } from "@/app/lib/stock/stockLookup";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { getStateForGUID, saveStateForGUID } from "@/app/lib/localStorage";
 import { useEffect } from "react";
 
@@ -64,6 +64,12 @@ export default function ServiceOptionsClient({
       selectedColor: savedState?.selectedColor || selectedColor,
     });
   }, [guid, serviceTypeId, selectedColor, setServiceTypeId]);
+
+  if (caseData.serviceTypeId === SERVICE_TYPES.THEFT_LOST) {
+    // NOTE: according to the requirements we should redirect
+    // straight to the payment if the case is of service type theft/lost
+    return redirect(`/${guid}/payment`);
+  }
 
   return (
     <>
