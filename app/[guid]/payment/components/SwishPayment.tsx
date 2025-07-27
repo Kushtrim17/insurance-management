@@ -19,6 +19,13 @@ export default function SwishPayment({ onPay }: SwishPaymentProps) {
   const [areSwishValuesValid, setAreSwishValuesValid] = useState(false);
 
   useEffect(() => {
+    const phoneNumberIsEmpty = values.phoneNumber === "";
+
+    if (phoneNumberIsEmpty) {
+      setAreSwishValuesValid(false);
+      return;
+    }
+
     const hasErrors = Object.values(errors).some((error) => error !== "");
     setAreSwishValuesValid(!hasErrors);
   }, [values, errors]);

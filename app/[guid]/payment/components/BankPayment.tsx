@@ -23,6 +23,15 @@ export default function BankPayment({ onPay }: BankPaymentProps) {
   });
 
   useEffect(() => {
+    const allValuesAreEmpty = Object.values(values).every(
+      (value) => value === ""
+    );
+
+    if (allValuesAreEmpty) {
+      setAreBankValuesValid(false);
+      return;
+    }
+
     const hasErrors = Object.values(errors).some((error) => error !== "");
     setAreBankValuesValid(!hasErrors);
   }, [values, errors]);
