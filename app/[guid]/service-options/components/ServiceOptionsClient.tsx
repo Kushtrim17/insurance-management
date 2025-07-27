@@ -18,6 +18,8 @@ import { useCanProceedToPayment } from "@/app/hooks/useCanProceedToPayment";
 import { useCaseState } from "@/app/hooks/useCaseState";
 import { SwapStockLookup } from "@/app/lib/stock/stockLookup";
 import { useRouter } from "next/navigation";
+import { getStateForGUID, saveStateForGUID } from "@/app/lib/localStorage";
+import { useEffect } from "react";
 
 type ServiceOptionsClientProps = {
   stockLookup: SwapStockLookup;
@@ -44,6 +46,25 @@ export default function ServiceOptionsClient({
     router.push(`/${guid}/payment`);
   };
 
+  const handleServiceTypeChange = (newServiceTypeId: number) => {
+    setServiceTypeId(newServiceTypeId);
+    saveStateForGUID(guid, { serviceTypeId: newServiceTypeId, selectedColor });
+  };
+
+  const handleColorChange = (newColor: string) => {
+    setSelectedColor(newColor);
+    saveStateForGUID(guid, { serviceTypeId, selectedColor: newColor });
+  };
+
+  useEffect(() => {
+    //NOTE: use the saved state if it exists, otherwise use the case data
+    const savedState = getStateForGUID(guid);
+    saveStateForGUID(guid, {
+      serviceTypeId: savedState?.serviceTypeId || serviceTypeId,
+      selectedColor: savedState?.selectedColor || selectedColor,
+    });
+  }, [guid, serviceTypeId, selectedColor, setServiceTypeId]);
+
   return (
     <>
       <Section direction="row">
@@ -58,7 +79,9 @@ export default function ServiceOptionsClient({
                 hasColorOptionsAvailable ? [] : [SERVICE_TYPES.SWAP]
               )}
               value={serviceTypeId}
-              onChange={(newService) => setServiceTypeId(Number(newService))}
+              onChange={(newService) =>
+                handleServiceTypeChange(Number(newService))
+              }
               name="service-option"
             />
           </CardContent>
@@ -78,7 +101,7 @@ export default function ServiceOptionsClient({
                   label: color,
                 }))}
                 value={selectedColor ?? ""}
-                onChange={(newValue) => setSelectedColor(newValue as string)}
+                onChange={(newValue) => handleColorChange(newValue as string)}
                 name="color-option"
               />
             </CardContent>

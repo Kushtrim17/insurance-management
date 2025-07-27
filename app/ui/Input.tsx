@@ -2,8 +2,8 @@ type InputProps = {
   value: string;
   onChange: (value: string, error?: string) => void;
   placeholder: string;
-  maxLength?: number;
-  minLength?: number;
+  maxLength: number;
+  minLength: number;
   inputMode?: React.HTMLAttributes<HTMLInputElement>["inputMode"];
   pattern?: string;
   onlyNumbers?: boolean;
@@ -28,8 +28,16 @@ export default function Input({
     }
 
     // NOTE: very basic error checking without using 3rd party libraries
-    const errorMessage =
-      maxLength && val.length < maxLength ? "Enter a valid value" : "";
+    const hasMaxLengthError = maxLength && val.length > maxLength;
+    const hasMinLengthError = minLength && val.length < minLength;
+    const hasError = hasMaxLengthError || hasMinLengthError;
+
+    const message =
+      minLength === maxLength
+        ? `Enter a valid value (max ${maxLength} characters)`
+        : `Enter a valid value (between ${minLength} and ${maxLength} characters)`;
+
+    const errorMessage = hasError ? message : "";
 
     onChange(val, errorMessage);
   };

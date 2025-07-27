@@ -41,7 +41,8 @@ export default function SwishPayment({ onPay }: SwishPaymentProps) {
               setValues({ ...values, phoneNumber: value });
             }}
             placeholder="Phone number"
-            maxLength={13}
+            minLength={10} // ex: 0701234567
+            maxLength={12} // ex: 046701234567
             inputMode="numeric"
             pattern="[0-9]*"
             onlyNumbers

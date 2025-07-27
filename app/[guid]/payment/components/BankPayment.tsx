@@ -23,11 +23,11 @@ export default function BankPayment({ onPay }: BankPaymentProps) {
   });
 
   useEffect(() => {
-    const allValuesAreEmpty = Object.values(values).every(
+    const someValuesAreEmpty = Object.values(values).some(
       (value) => value === ""
     );
 
-    if (allValuesAreEmpty) {
+    if (someValuesAreEmpty) {
       setAreBankValuesValid(false);
       return;
     }
@@ -47,6 +47,7 @@ export default function BankPayment({ onPay }: BankPaymentProps) {
               setValues({ ...values, cardNumber: value });
             }}
             placeholder="Card number"
+            minLength={16}
             maxLength={16}
             inputMode="numeric"
             pattern="[0-9]*"
@@ -63,7 +64,8 @@ export default function BankPayment({ onPay }: BankPaymentProps) {
                 setValues({ ...values, expiryDate: value });
               }}
               placeholder="Expiry date"
-              maxLength={5}
+              minLength={7}
+              maxLength={7}
               inputMode="numeric"
               pattern="[0-9]*"
               type="month"
@@ -78,6 +80,7 @@ export default function BankPayment({ onPay }: BankPaymentProps) {
                 setValues({ ...values, cvv: value });
               }}
               placeholder="CVV"
+              minLength={3}
               maxLength={3}
               inputMode="numeric"
               pattern="[0-9]*"
