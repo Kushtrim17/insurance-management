@@ -44,6 +44,7 @@ export default function PaymentClient({
     if (serviceTypeId === ServiceTypeId.SWAP) {
       return "Deductible + Deposit";
     }
+
     return "Deductible";
   };
 
@@ -80,8 +81,6 @@ export default function PaymentClient({
   };
 
   const handlePay = (paymentMethod: PaymentMethodKey) => {
-    console.log("Paying");
-    console.log({ redirectUrl, paymentMethod });
     setShowPaymentSuccessMessage(true);
 
     if (paymentMethod === PaymentMethodKey.BANK_CARD) {
@@ -90,7 +89,6 @@ export default function PaymentClient({
       setTimeout(() => {
         // a few seconds so that the user can see the success message
         redirect(redirectUrl);
-        setShowRedirectMessage(false);
       }, 4000);
     }
   };
